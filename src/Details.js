@@ -22,7 +22,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import axios from 'axios';
 //https://github.com/Yuvaleros/material-ui-dropzone
 
-const SERVER_URL = 'http://flicksickapp.com';
+const SERVER_URL = 'http://flicksickserver.com';
 // const SERVER_URL_PROD = 'http://flicksickapp.com';
 // const SERVER_URL_DEV = 'http://192.168.0.100:3050';
 
