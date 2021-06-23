@@ -22,10 +22,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import axios from 'axios';
 //https://github.com/Yuvaleros/material-ui-dropzone
 
-const SERVER_URL = 'http://flicksickapp.com';
-// const SERVER_URL_PROD = 'http://flicksickapp.com';
-// const SERVER_URL_DEV = 'http://192.168.0.100:3050';
-
 const theme = createMuiTheme({
 	// spacing: 60,
 	palette: {
@@ -193,35 +189,32 @@ const App = (props) => {
 		console.log('posterImageData: ', posterImage);
 		values['adult'] = isAdult;
 		values['media'] = media;
-		values['data_for'] = saveAs;
+		values['save_as'] = saveAs;
 		values['release_date'] = releaseYear;
 		values['genres'] = tempGenres;
 		values['title'] = title;
 
 		imageData.append('movie', JSON.stringify(values));
 		console.log('values: ', values);
-
-		// console.log('imageData: ', imageData);
+		console.log('imageData: ', imageData);
 		if (movieDataFromDB) {
-			movieDataFromDB['data_for'] = saveAs;
+			movieDataFromDB['save_as'] = saveAs;
 		}
-		// console.log('movieDataFromDB: ', movieDataFromDB);
 		const obj = {
-			movie_data: movieDataFromDB,
+			movie_data: movieDataFromDB ? movieDataFromDB : imageData,
 			movie_exist_flag: movieDataFromDB ? true : false
 		};
 
-		axios(SERVER_URL + '/onSave', {
+		axios('http://192.168.0.100:3050/onSave', {
 			method: 'post',
 			// headers: {
 			// 	'Content-type': 'Application/json',
 			// 	// 'Content-type': 'Application/json, application/x-www-form-urlencoded',
 			// 	Accept: 'Application/json'
 			// },
-			data: movieDataFromDB ? obj : imageData
+			data: obj
 		})
 			.then((res) => {
-				setMovieAlreadyPresentFlag(false);
 				console.log(res);
 			})
 			.catch((err) => {
@@ -256,7 +249,7 @@ const App = (props) => {
 		const obj = {
 			id: '123'
 		};
-		axios(SERVER_URL + '/getUtilData', {
+		axios('http://192.168.0.100:3050/getUtilData', {
 			method: 'post',
 			// headers: {
 			// 	'Content-type': 'Application/json',
@@ -297,7 +290,7 @@ const App = (props) => {
 			release_date: releaseYear
 		};
 
-		axios(SERVER_URL + '/searchMovie', {
+		axios('http://192.168.0.100:3050/searchMovie', {
 			method: 'post',
 			// headers: {
 			// 	'Content-type': 'Application/json',
@@ -308,11 +301,8 @@ const App = (props) => {
 		})
 			.then((res) => {
 				if (res.data.length === 0) {
-					setMovieAlreadyPresentFlag(false);
-					setMovieDataFromDB(null);
 					return;
 				}
-				console.log('here');
 				setMovieDataFromDB(res.data[0]);
 				setMovieAlreadyPresentFlag(true);
 				console.log(res.data);
@@ -418,7 +408,7 @@ const App = (props) => {
 							InputLabelProps={{
 								shrink: values.runtime ? true : false
 							}}
-							type={'tel'}
+							type={'number'}
 							value={values.runtime}
 							style={{ width: 300 }}
 							onChange={(e) => handleInputChange(e)}
@@ -428,7 +418,7 @@ const App = (props) => {
 							autoComplete="off"
 							className={classes.textField}
 							variant="outlined"
-							type={'tel'}
+							type={'number'}
 							// type={this.state.showPassword ? 'text' : 'password'}
 							label="Release Year"
 							value={releaseYear}
@@ -478,7 +468,7 @@ const App = (props) => {
 							autoComplete="off"
 							className={classes.textField}
 							variant="outlined"
-							type={'tel'}
+							type={'number'}
 							// type={this.state.showPassword ? 'text' : 'password'}
 							label="Age"
 							InputLabelProps={{
@@ -542,7 +532,7 @@ const App = (props) => {
 							autoComplete="off"
 							className={classes.textField}
 							variant="outlined"
-							type={'tel'}
+							type={'number'}
 							// type={this.state.showPassword ? 'text' : 'password'}
 							label="IMDB Rating"
 							InputLabelProps={{
@@ -556,7 +546,7 @@ const App = (props) => {
 							autoComplete="off"
 							className={classes.textField}
 							variant="outlined"
-							type={'tel'}
+							type={'number'}
 							// type={this.state.showPassword ? 'text' : 'password'}
 							label="IMDB Votes Count"
 							InputLabelProps={{
@@ -570,7 +560,7 @@ const App = (props) => {
 						<TextField
 							id="rotten_tomatoes_rating"
 							autoComplete="off"
-							type={'tel'}
+							type={'number'}
 							className={classes.textField}
 							variant="outlined"
 							// type={this.state.showPassword ? 'text' : 'password'}
@@ -584,7 +574,7 @@ const App = (props) => {
 						<TextField
 							id="rotten_tomatoes_vote_count"
 							autoComplete="off"
-							type={'tel'}
+							type={'number'}
 							className={classes.textField}
 							variant="outlined"
 							// type={this.state.showPassword ? 'text' : 'password'}
@@ -612,7 +602,7 @@ const App = (props) => {
 							autoComplete="off"
 							className={classes.textField}
 							variant="outlined"
-							type={'tel'}
+							type={'number'}
 							// type={this.state.showPassword ? 'text' : 'password'}
 							label="TMDB Rating"
 							InputLabelProps={{
@@ -626,7 +616,7 @@ const App = (props) => {
 							autoComplete="off"
 							className={classes.textField}
 							variant="outlined"
-							type={'tel'}
+							type={'number'}
 							// type={this.state.showPassword ? 'text' : 'password'}
 							label="TMDB Votes Count"
 							InputLabelProps={{
