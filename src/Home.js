@@ -62,7 +62,7 @@ function Copyright() {
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
-		marginTop: theme.spacing(8),
+		marginTop: theme.spacing(1),
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center'
@@ -114,7 +114,7 @@ const Home = (props) => {
 					<Typography variant="body2" gutterBottom className={classes.text}>
 						SUGGEST GOOD MOVIE / SERIES OR NOTHING
 					</Typography>
-					<div style={{ flexDirection: 'row', marginTop: 100, justifyContent: 'center' }}>
+					<div style={{ flexDirection: 'row', marginTop: 180, justifyContent: 'center' }}>
 						<img src={appstore} resizeMode={'cover'} height={40} style={{ marginRight: 15 }} />
 						{/* <div style={{ marginLeft: 5 }} /> */}
 						<img
