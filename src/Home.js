@@ -18,10 +18,32 @@ import logo from './flicksick.png';
 import appstore from './appstore.png';
 import playstore from './playstore.png';
 
+// const useStyles = makeStyles((theme) => ({
+// 	text: {
+// 		color: '#ffffff'
+// 	}
+// }));
+
 const theme = createMuiTheme({
 	// spacing: 60,
 	palette: {
-		type: 'dark'
+		type: 'dark',
+		primary: { main: '#e91e63' },
+		secondary: { main: '#0277bd' },
+		text: {
+			// primary: '#0277bd',
+			secondary: '#0277bd',
+			disabled: '#0277bd',
+			hint: '#0277bd'
+		}
+	},
+	overrides: {
+		MuiTypography: {
+			body2: {
+				// fontSize: [ 12, '!important' ],
+				// fontWeight: 600
+			}
+		}
 	}
 });
 
@@ -57,6 +79,21 @@ const useStyles = makeStyles((theme) => ({
 	},
 	submit: {
 		margin: theme.spacing(3, 0, 2)
+	},
+	text: {
+		color: '#48D1CC',
+		fontSize: [ 12, '!important' ],
+		fontWeight: 600
+	},
+	head: {
+		color: '#ffffff',
+		fontSize: [ 40, '!important' ],
+		fontWeight: 600
+	},
+	subTitle: {
+		color: '#D3D3D3',
+		fontSize: [ 14, '!important' ],
+		fontWeight: 600
 	}
 }));
 
@@ -71,10 +108,13 @@ const Home = (props) => {
 					<Avatar className={classes.avatar} src={logo} />
 					{/* <Avatar className={classes.avatar} src={appstore} /> */}
 					{/* <Avatar className={classes.avatar} src={playstore} /> */}
-					<Typography component="h1" variant="h4">
+					<Typography component="h1" variant="h4" className={classes.head}>
 						Flick / Sick
 					</Typography>
-					<div style={{ flexDirection: 'row', marginTop: 100 }}>
+					<Typography variant="body2" gutterBottom className={classes.text}>
+						SUGGEST GOOD MOVIE / SERIES OR NOTHING
+					</Typography>
+					<div style={{ flexDirection: 'row', marginTop: 100, justifyContent: 'center' }}>
 						<img src={appstore} resizeMode={'cover'} height={40} style={{ marginRight: 15 }} />
 						{/* <div style={{ marginLeft: 5 }} /> */}
 						<img
@@ -83,6 +123,15 @@ const Home = (props) => {
 							height={40}
 							style={{ marginLeft: 10, border: '0.4px solid rgba(255,255,255, .7)', borderRadius: 3 }}
 						/>
+						<Typography
+							variant="button"
+							display="block"
+							gutterBottom
+							align="center"
+							className={classes.subTitle}
+						>
+							DOWNLOAD YOUR OTT PARTNER
+						</Typography>
 					</div>
 				</div>
 				<Box mt={8}>

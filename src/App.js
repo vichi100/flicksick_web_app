@@ -15,3 +15,5 @@ export default App;
 
 // yarn start
 // npx create-react-app <app name>
+
+// http://flicksickserver.com/image/backdrop/hVS39oCyDSyzY7kl_kMNh.jpg
