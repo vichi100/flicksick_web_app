@@ -16,11 +16,18 @@ import {
 	FormControlLabel,
 	FormControl
 } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import Snackbar from '@material-ui/core/Snackbar';
+import CloseIcon from '@material-ui/icons/Close';
 
 import { DropzoneDialog, DropzoneArea } from 'material-ui-dropzone';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import axios from 'axios';
 //https://github.com/Yuvaleros/material-ui-dropzone
+
+const SERVER_URL = 'http://flicksickserver.com';
+// const SERVER_URL_PROD = 'http://flicksickapp.com';
+// const SERVER_URL_DEV = 'http://192.168.0.101:3050';
 
 const theme = createMuiTheme({
 	// spacing: 60,
@@ -86,8 +93,21 @@ const App = (props) => {
 	const [ error, setError ] = useState(null);
 	const [ movieAlreadyPresentFlag, setMovieAlreadyPresentFlag ] = useState(false);
 	const [ movieDataFromDB, setMovieDataFromDB ] = useState(null);
+	const [ open, setOpen ] = useState(false);
+	const [ responseMessage, setResponseMessage ] = useState(null);
 
 	const [ value, setValue ] = React.useState(null);
+
+	const handleToClose = (event, reason) => {
+		console.log(reason);
+		if ('clickaway' === reason) return;
+		setOpen(false);
+		clearState();
+	};
+
+	const clearState = () => {
+		window.location.reload();
+	};
 
 	const handleInputChange = (e) => {
 		setError(null);
@@ -189,37 +209,45 @@ const App = (props) => {
 		console.log('posterImageData: ', posterImage);
 		values['adult'] = isAdult;
 		values['media'] = media;
-		values['save_as'] = saveAs;
+		values['data_for'] = saveAs;
 		values['release_date'] = releaseYear;
 		values['genres'] = tempGenres;
 		values['title'] = title;
 
 		imageData.append('movie', JSON.stringify(values));
 		console.log('values: ', values);
-		console.log('imageData: ', imageData);
+
+		// console.log('imageData: ', imageData);
 		if (movieDataFromDB) {
-			movieDataFromDB['save_as'] = saveAs;
+			movieDataFromDB['data_for'] = saveAs;
 		}
+		// console.log('movieDataFromDB: ', movieDataFromDB);
 		const obj = {
-			movie_data: movieDataFromDB ? movieDataFromDB : imageData,
+			movie_data: movieDataFromDB,
 			movie_exist_flag: movieDataFromDB ? true : false
 		};
 
-		axios('http://192.168.0.101:3050/onSave', {
+		axios(SERVER_URL + '/onSave', {
 			method: 'post',
 			// headers: {
 			// 	'Content-type': 'Application/json',
 			// 	// 'Content-type': 'Application/json, application/x-www-form-urlencoded',
 			// 	Accept: 'Application/json'
 			// },
-			data: obj
+			data: movieDataFromDB ? obj : imageData
 		})
 			.then((res) => {
+				console.log(res);
+				setMovieAlreadyPresentFlag(false);
+				setResponseMessage(res.data);
 				console.log(res);
 			})
 			.catch((err) => {
 				console.log(err);
+				setResponseMessage(err);
 			});
+
+		setOpen(true);
 	};
 
 	const isAdultFunc = (event, valuesX) => {
@@ -249,7 +277,7 @@ const App = (props) => {
 		const obj = {
 			id: '123'
 		};
-		axios('http://192.168.0.101:3050/getUtilData', {
+		axios(SERVER_URL + '/getUtilData', {
 			method: 'post',
 			// headers: {
 			// 	'Content-type': 'Application/json',
@@ -290,7 +318,7 @@ const App = (props) => {
 			release_date: releaseYear
 		};
 
-		axios('http://192.168.0.101:3050/searchMovie', {
+		axios(SERVER_URL + '/searchMovie', {
 			method: 'post',
 			// headers: {
 			// 	'Content-type': 'Application/json',
@@ -301,8 +329,11 @@ const App = (props) => {
 		})
 			.then((res) => {
 				if (res.data.length === 0) {
+					setMovieAlreadyPresentFlag(false);
+					setMovieDataFromDB(null);
 					return;
 				}
+				console.log('here');
 				setMovieDataFromDB(res.data[0]);
 				setMovieAlreadyPresentFlag(true);
 				console.log(res.data);
@@ -408,7 +439,7 @@ const App = (props) => {
 							InputLabelProps={{
 								shrink: values.runtime ? true : false
 							}}
-							type={'number'}
+							type={'tel'}
 							value={values.runtime}
 							style={{ width: 300 }}
 							onChange={(e) => handleInputChange(e)}
@@ -418,7 +449,7 @@ const App = (props) => {
 							autoComplete="off"
 							className={classes.textField}
 							variant="outlined"
-							type={'number'}
+							type={'tel'}
 							// type={this.state.showPassword ? 'text' : 'password'}
 							label="Release Year"
 							value={releaseYear}
@@ -468,7 +499,7 @@ const App = (props) => {
 							autoComplete="off"
 							className={classes.textField}
 							variant="outlined"
-							type={'number'}
+							type={'tel'}
 							// type={this.state.showPassword ? 'text' : 'password'}
 							label="Age"
 							InputLabelProps={{
@@ -532,7 +563,7 @@ const App = (props) => {
 							autoComplete="off"
 							className={classes.textField}
 							variant="outlined"
-							type={'number'}
+							type={'tel'}
 							// type={this.state.showPassword ? 'text' : 'password'}
 							label="IMDB Rating"
 							InputLabelProps={{
@@ -546,7 +577,7 @@ const App = (props) => {
 							autoComplete="off"
 							className={classes.textField}
 							variant="outlined"
-							type={'number'}
+							type={'tel'}
 							// type={this.state.showPassword ? 'text' : 'password'}
 							label="IMDB Votes Count"
 							InputLabelProps={{
@@ -560,7 +591,7 @@ const App = (props) => {
 						<TextField
 							id="rotten_tomatoes_rating"
 							autoComplete="off"
-							type={'number'}
+							type={'tel'}
 							className={classes.textField}
 							variant="outlined"
 							// type={this.state.showPassword ? 'text' : 'password'}
@@ -574,7 +605,7 @@ const App = (props) => {
 						<TextField
 							id="rotten_tomatoes_vote_count"
 							autoComplete="off"
-							type={'number'}
+							type={'tel'}
 							className={classes.textField}
 							variant="outlined"
 							// type={this.state.showPassword ? 'text' : 'password'}
@@ -602,7 +633,7 @@ const App = (props) => {
 							autoComplete="off"
 							className={classes.textField}
 							variant="outlined"
-							type={'number'}
+							type={'tel'}
 							// type={this.state.showPassword ? 'text' : 'password'}
 							label="TMDB Rating"
 							InputLabelProps={{
@@ -616,7 +647,7 @@ const App = (props) => {
 							autoComplete="off"
 							className={classes.textField}
 							variant="outlined"
-							type={'number'}
+							type={'tel'}
 							// type={this.state.showPassword ? 'text' : 'password'}
 							label="TMDB Votes Count"
 							InputLabelProps={{
@@ -802,6 +833,23 @@ const App = (props) => {
 					</Typography>
 				</div>
 			</Container>
+			<Snackbar
+				anchorOrigin={{
+					horizontal: 'left',
+					vertical: 'bottom'
+				}}
+				open={open}
+				autoHideDuration={null}
+				message={responseMessage}
+				onClose={handleToClose}
+				action={
+					<React.Fragment>
+						<IconButton size="small" aria-label="close" color="inherit" onClick={handleToClose}>
+							<CloseIcon fontSize="small" />
+						</IconButton>
+					</React.Fragment>
+				}
+			/>
 		</ThemeProvider>
 	);
 };

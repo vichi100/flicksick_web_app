@@ -24,7 +24,7 @@ import axios from 'axios';
 
 const SERVER_URL = 'http://flicksickserver.com';
 // const SERVER_URL_PROD = 'http://flicksickapp.com';
-// const SERVER_URL_DEV = 'http://192.168.0.100:3050';
+// const SERVER_URL_DEV = 'http://192.168.0.101:3050';
 
 const theme = createMuiTheme({
 	// spacing: 60,
