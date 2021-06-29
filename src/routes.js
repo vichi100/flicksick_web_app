@@ -3,14 +3,14 @@ import SignInSide from './SignInSide';
 import Trending from './Trending';
 import NewMovie from './NewMovie';
 import Home from './Home';
-// import Policy from './components/Policy';
+import Privacy from './Privacy';
 
 const routes = {
 	'/': () => <Home />,
 	'/signin': () => <SignInSide />,
 	'/trending': () => <Trending />,
-	'/newmovie': () => <NewMovie />
-	// '/policy': () => <Policy />
+	'/newmovie': () => <NewMovie />,
+	'/privacy': () => <Privacy />
 };
 
 export default routes;
