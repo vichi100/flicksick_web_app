@@ -60,6 +60,8 @@ function Copyright() {
 	);
 }
 
+
+
 const useStyles = makeStyles((theme) => ({
 	paper: {
 		marginTop: theme.spacing(1),
@@ -82,23 +84,36 @@ const useStyles = makeStyles((theme) => ({
 	},
 	text: {
 		color: '#48D1CC',
-		fontSize: [ 12, '!important' ],
+		fontSize: [12, '!important'],
 		fontWeight: 600
 	},
 	head: {
 		color: '#ffffff',
-		fontSize: [ 40, '!important' ],
+		fontSize: [40, '!important'],
 		fontWeight: 600
 	},
 	subTitle: {
 		color: '#D3D3D3',
-		fontSize: [ 14, '!important' ],
+		fontSize: [14, '!important'],
 		fontWeight: 600
+	},
+
+	support: {
+		color: '#D3D3D3',
+		fontSize: [14, '!important'],
+		marginTop: 5
 	}
 }));
 
 const Home = (props) => {
 	const classes = useStyles();
+	function Support() {
+		return (
+			<Typography variant="body2" className={classes.support} align="center">
+				Support +91 9833097595
+			</Typography>
+		);
+	}
 
 	return (
 		<ThemeProvider theme={theme}>
@@ -136,6 +151,7 @@ const Home = (props) => {
 				</div>
 				<Box mt={8}>
 					<Copyright />
+					<Support />
 				</Box>
 			</Container>
 		</ThemeProvider>
