@@ -130,14 +130,19 @@ const Home = (props) => {
 						SUGGEST GOOD MOVIE / SERIES OR NOTHING
 					</Typography>
 					<div style={{ flexDirection: 'row', marginTop: 180, justifyContent: 'center' }}>
-						<img src={appstore} resizeMode={'cover'} height={40} style={{ marginRight: 15 }} />
+						<Link color="inherit" href="https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=1576966352">
+							<img src={appstore} resizeMode={'cover'} height={40} style={{ marginRight: 15 }} />
+						</Link>
 						{/* <div style={{ marginLeft: 5 }} /> */}
-						<img
-							src={playstore}
-							resizeMode={'cover'}
-							height={40}
-							style={{ marginLeft: 10, border: '0.4px solid rgba(255,255,255, .7)', borderRadius: 3 }}
-						/>
+						<Link color="inherit" href="https://play.google.com/store/apps/details?id=com.dejavuapps.flicksick">
+
+							<img
+								src={playstore}
+								resizeMode={'cover'}
+								height={40}
+								style={{ marginLeft: 10, border: '0.4px solid rgba(255,255,255, .7)', borderRadius: 3 }}
+							/>
+						</Link>
 						<Typography
 							variant="button"
 							display="block"
