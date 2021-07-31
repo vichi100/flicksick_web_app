@@ -90,27 +90,27 @@ const initialValues = {
 
 const App = (props) => {
 	const { classes } = props;
-	const [ title, setTitle ] = useState(null);
-	const [ releaseYear, setReleaseYear ] = useState(null);
-	const [ isAdult, setIsAdult ] = useState(null);
-	const [ genres, setGenres ] = useState([]);
-	const [ genresDict, setGenresDict ] = useState({});
-	const [ media, setMedia ] = useState(null);
-	const [ selectedGenresArray, setSelectedGenresArray ] = useState([]);
-	const [ values, setValues ] = useState(initialValues);
-	const [ openPosterUpload, setOpenPosterUpload ] = useState(false);
-	const [ openBackdropUpload, setOpenBackdropUpload ] = useState(false);
-	const [ posterImage, setPosterImage ] = useState(null);
-	const [ backdropImage, setBackdropImage ] = useState(null);
-	const [ saveAs, setSaveAs ] = useState(null);
-	const [ error, setError ] = useState(null);
-	const [ movieAlreadyPresentFlag, setMovieAlreadyPresentFlag ] = useState(false);
-	const [ movieDataFromDB, setMovieDataFromDB ] = useState(null);
-	const [ clickedItem, setClickedItem ] = useState('');
-	const [ open, setOpen ] = useState(false);
-	const [ responseMessage, setResponseMessage ] = useState(null);
+	const [title, setTitle] = useState(null);
+	const [releaseYear, setReleaseYear] = useState(null);
+	const [isAdult, setIsAdult] = useState(null);
+	const [genres, setGenres] = useState([]);
+	const [genresDict, setGenresDict] = useState({});
+	const [media, setMedia] = useState(null);
+	const [selectedGenresArray, setSelectedGenresArray] = useState([]);
+	const [values, setValues] = useState(initialValues);
+	const [openPosterUpload, setOpenPosterUpload] = useState(false);
+	const [openBackdropUpload, setOpenBackdropUpload] = useState(false);
+	const [posterImage, setPosterImage] = useState(null);
+	const [backdropImage, setBackdropImage] = useState(null);
+	const [saveAs, setSaveAs] = useState(null);
+	const [error, setError] = useState(null);
+	const [movieAlreadyPresentFlag, setMovieAlreadyPresentFlag] = useState(false);
+	const [movieDataFromDB, setMovieDataFromDB] = useState(null);
+	const [clickedItem, setClickedItem] = useState('');
+	const [open, setOpen] = useState(false);
+	const [responseMessage, setResponseMessage] = useState(null);
 
-	const [ value, setValue ] = React.useState(null);
+	const [value, setValue] = React.useState(null);
 
 	const handleToClose = (event, reason) => {
 		console.log(reason);
@@ -338,8 +338,8 @@ const App = (props) => {
 			});
 		});
 		console.log(JSON.stringify(ott));
-		setPosterImage([ { name: movieData.poster_path } ]);
-		setBackdropImage([ { name: movieData.backdrop_path } ]);
+		setPosterImage([{ name: movieData.poster_path }]);
+		setBackdropImage([{ name: movieData.backdrop_path }]);
 		var rottenTomatoes = 'NA';
 		movieData.ratings &&
 			movieData.ratings.map((item) => {
@@ -508,7 +508,7 @@ const App = (props) => {
 										id="adult"
 										value={values.adult}
 										// defaultValue={[]}
-										options={[ 'True', 'False' ]}
+										options={['True', 'False']}
 										getOptionLabel={(option) => option}
 										style={{ width: 300 }}
 										onChange={isAdultFunc}
@@ -742,7 +742,7 @@ const App = (props) => {
 								<DropzoneDialog
 									open={openPosterUpload}
 									onSave={handlePosterImageSave}
-									acceptedFiles={[ 'image/jpeg', 'image/png', 'image/bmp' ]}
+									acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
 									showPreviews={true}
 									maxFileSize={5000000}
 									onClose={handlePosterClose}
@@ -776,7 +776,7 @@ const App = (props) => {
 								<DropzoneDialog
 									open={openBackdropUpload}
 									onSave={handleBackdropImageSave}
-									acceptedFiles={[ 'image/jpeg', 'image/png', 'image/bmp' ]}
+									acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
 									showPreviews={true}
 									maxFileSize={5000000}
 									onClose={handleBackdropClose}
